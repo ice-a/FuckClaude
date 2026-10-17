@@ -20,6 +20,3 @@ export const SITE_AUTHOR: SiteAuthor = {
     zh: '独立开发者,基于 Claude Code 指纹检测的公开逆向分析构建了 Fuck Claude。本站是参考工具与教育型知识库,与 Anthropic 无任何关联。',
   },
 };
-
-export const ADSENSE_PUB_ID = 'ca-pub-1916766675410622';
-export const ADSENSE_PUBLISHER_NUMERIC = '1916766675410622';

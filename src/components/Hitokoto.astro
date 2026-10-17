@@ -1,0 +1,116 @@
+---
+/**
+ * 每日一言 —— 调用一言（hitokoto）开源 API 拉取一句随机文案。
+ * 接口：https://hitokoto.cn/  →  https://v1.hitokoto.cn/?encode=json
+ * 仅用于展示一句随机鼓励/感悟，不做任何上报；接口不可达时回退到内置文案，
+ * 以兼容本站「本地优先、可离线」的体验。
+ */
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section id="hitokoto-sec" class="hitokoto" aria-labelledby="hitokoto-title">
+  <div class="wrap hitokoto__inner">
+    <h2 id="hitokoto-title" class="hitokoto__title">{t('hitokoto.label')}</h2>
+    <blockquote class="hitokoto__quote">
+      <p class="hitokoto__text" id="hitokoto-text" aria-live="polite">{t('hitokoto.loading')}</p>
+      <footer class="hitokoto__from" id="hitokoto-from"></footer>
+    </blockquote>
+  </div>
+</section>
+
+<style>
+  .hitokoto {
+    margin-top: 8px;
+  }
+  .hitokoto__inner {
+    padding: 22px 24px;
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+  .hitokoto__title {
+    margin: 0 0 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent-strong);
+  }
+  .hitokoto__quote {
+    margin: 0;
+  }
+  .hitokoto__text {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 1.18rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  .hitokoto__from {
+    margin-top: 10px;
+    font-size: 0.86rem;
+    color: var(--muted);
+    text-align: right;
+  }
+</style>
+
+<script>
+  // 一言（hitokoto）随机文案：https://hitokoto.cn/
+  type Hitokoto = { hitokoto?: string; from?: string };
+
+  // 内置兜底鼓励语（接口不可达时随机展示，保证离线也可用）
+  const FALLBACKS: { text: string; from: string; lang: 'zh' | 'en' }[] = [
+    { text: '你比自己想象的更强大。', from: '', lang: 'zh' },
+    { text: '每一次尝试，都让你离目标更近一步。', from: '', lang: 'zh' },
+    { text: '慢慢来，比较快。', from: '', lang: 'zh' },
+    { text: '你今天的努力，是幸运的伏笔。', from: '', lang: 'zh' },
+    { text: '山高路远，但只要走，总会到达。', from: '', lang: 'zh' },
+    { text: '纵有疾风起，人生不言弃。', from: '', lang: 'zh' },
+    { text: '海压竹枝低复举，风吹山角晦还明。', from: '', lang: 'zh' },
+    { text: 'You are stronger than you think.', from: '', lang: 'en' },
+    { text: 'Every small step counts.', from: '', lang: 'en' },
+    { text: "The night is darkest just before the dawn.", from: '', lang: 'en' },
+    { text: 'Slow is smooth, smooth is fast.', from: '', lang: 'en' },
+    { text: 'Fall seven times, stand up eight.', from: '', lang: 'en' },
+  ];
+
+  function currentLang(): 'zh' | 'en' {
+    return document.documentElement.lang.toLowerCase().startsWith('zh') ? 'zh' : 'en';
+  }
+
+  function applyFallback() {
+    const textEl = document.getElementById('hitokoto-text');
+    const fromEl = document.getElementById('hitokoto-from');
+    const lang = currentLang();
+    const pool = FALLBACKS.filter((q) => q.lang === lang);
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    if (textEl) textEl.textContent = pick.text;
+    if (fromEl) fromEl.textContent = pick.from ? `—— ${pick.from}` : '';
+  }
+
+  async function loadHitokoto() {
+    const textEl = document.getElementById('hitokoto-text');
+    const fromEl = document.getElementById('hitokoto-from');
+    if (!textEl) return;
+    try {
+      const res = await fetch('https://v1.hitokoto.cn/?encode=json', {
+        signal: AbortSignal.timeout(4000),
+      });
+      if (!res.ok) throw new Error('bad status');
+      const data = (await res.json()) as Hitokoto;
+      if (!data.hitokoto) throw new Error('empty');
+      textEl.textContent = data.hitokoto;
+      if (fromEl) fromEl.textContent = data.from ? `—— ${data.from}` : '';
+    } catch {
+      applyFallback();
+    }
+  }
+
+  loadHitokoto();
+</script>

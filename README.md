@@ -22,17 +22,6 @@ A web page can only read browser-visible signals. Crucially, `Intl` reads the **
 OS timezone** Claude Code does, so timezone is the one signal that maps directly onto
 Claude's real check. The other signals are general "Chinese environment" fingerprints.
 
-## Sponsors
-
-[Want to be listed below?](mailto:linxiaotao1993@gmail.com)
-
-| 🏆 Sponsors 🏆 | Introduction |
-| --- | --- |
-| <a href="https://go.apimart.ai/s-fuck-claude"><img src="public/sponsors/apimart-wordmark.jpg" width="160" alt="APIMart.AI"></a> | **[APIMart.AI — GPT-Image-2 from $0.006 per image](https://go.apimart.ai/s-fuck-claude)**<br>Thanks to APIMart for sponsoring this project! A low-cost API platform focused on AI image and video generation, stable and fast. GPT-Image-2 starts at $0.006 per image, so $1 generates 160+ images. [Try now](https://go.apimart.ai/s-fuck-claude). |
-| <a href="https://roxybrowser.cn/invite/A4YZ2O"><img src="public/sponsors/roxy-wordmark.jpg" width="140" alt="Roxy Browser"></a> | **[Roxy Browser \| Multi-account farming & anti-ban](https://roxybrowser.cn/invite/A4YZ2O)** (10% off promo code)<br>Thanks to Roxy Browser for sponsoring this project! Built to bypass AI-platform risk-control checks: fully masks Canvas, WebGL and other low-level fingerprints, gives every account absolute physical isolation, and keeps batch account farming stable and ban-free. |
-| <a href="https://www.energy-rent.work/"><img src="public/sponsors/flashrent-wordmark.png" width="170" alt="FlashRent"></a> | **[FlashRent — TRON Energy Rental](https://www.energy-rent.work/)**<br>Thanks to FlashRent for sponsoring this project! Save up to 80% on USDT transfer gas fees on TRON. Instant delegation without freezing TRX — supports single rentals, bulk orders, and Telegram bot integration. [Try free](https://www.energy-rent.work/). |
-| <a href="https://agentearth.ai/login?mode=register&ref_code=Ot7RhpNk"><img src="public/sponsors/agentearth-wordmark.png" width="160" alt="AgentEarth"></a> | **[AgentEarth — Sign up for 5,000 credits ($5 value)](https://agentearth.ai/login?mode=register&ref_code=Ot7RhpNk)**<br>Thanks to AgentEarth for sponsoring this project! Unified gateway to 1,400+ pro APIs for AI Agents — search, finance, scraping, multimodal, and more. MCP & Skill ready. New users get 5,000 credits free ($5 value). [Sign up free](https://agentearth.ai/login?mode=register&ref_code=Ot7RhpNk). |
-
 ## Detected signals & weights
 
 | Signal | Weight | How it's detected |
@@ -108,19 +97,15 @@ src/
 ├── config/signals.ts    # signal definitions, weights, detectors, icons
 ├── config/guides.ts     # guide metadata: slug, category, summary, dates, related guides, official sources
 ├── config/official-rules.ts # Anthropic rules shown on the guides hub, each linked to its source
-├── config/sponsors.ts   # sponsor list (logo, link, EN/ZH taglines)
-├── config/cn-models.ts  # domestic-model picks (DeepSeek / GLM / Kimi name-only links)
 ├── config/socials.ts    # header social profiles (Xiaohongshu / Douyin / X) + QR payloads
 ├── content/guidesData.ts # registers the bilingual article bodies in content/guides/
 ├── utils/guide-html.ts  # table of contents, table wrappers, reading time
 ├── i18n/ui.ts           # EN/ZH copy dictionary + translator
 ├── scripts/detect.ts    # animated scan + scoring + verdict + share wiring (client)
-├── scripts/track.ts     # GA click tracking for outbound promo links
-├── layouts/BaseLayout.astro  # <head> SEO + GA + global styles
-├── components/          # Detector (+ share buttons), Sponsors, CnModels, ScoreRing, Mascot, LangToggle, SocialLinks (QR popovers), Footer
+├── layouts/BaseLayout.astro  # <head> SEO + global styles
+├── components/          # Detector (+ share buttons), ScoreRing, Mascot, LangToggle, SocialLinks (QR popovers), Footer, Hitokoto
 └── pages/               # index.astro (en) + zh/index.astro + guides/ + zh/guides/ + api/check.ts
 public/mascot/           # cartoon CEO state images (doze / search / low / medium / high)
-public/sponsors/         # sponsor logos
 scripts/
 └── gen-assets.mjs       # regenerates favicon / PWA icons / og.png (node scripts/gen-assets.mjs)
 skills/
@@ -187,17 +172,6 @@ Claude Code 标记为中国用户。点击后会有逐项检测的扫描动效,�
 网页只能读取浏览器可见信号。关键在于:`Intl` 读到的时区与 Claude Code 读的是**同一个
 操作系统时区**,因此时区是唯一能直接对应 Claude 真实判定的信号;其余信号属于更广义的
 「中文环境指纹」。
-
-## 赞助商
-
-[想显示在下方？](mailto:linxiaotao1993@gmail.com)
-
-| 🏆 赞助商 🏆 | 介绍 |
-| --- | --- |
-| <a href="https://go.apimart.ai/s-fuck-claude"><img src="public/sponsors/apimart-wordmark.jpg" width="160" alt="APIMart.AI"></a> | **[APIMart.AI — GPT-Image-2 低至 $0.006/张](https://go.apimart.ai/s-fuck-claude)**<br>感谢 APIMart 赞助本项目！专注 AI 图片/视频生成的低价 API 平台，长期稳定、响应快。GPT-Image-2 低至 $0.006/张，1 美元可出图 160+ 张。欢迎[立即体验](https://go.apimart.ai/s-fuck-claude)。 |
-| <a href="https://roxybrowser.cn/invite/A4YZ2O"><img src="public/sponsors/roxy-wordmark.jpg" width="140" alt="Roxy 浏览器"></a> | **[Roxy 浏览器 \| 养号&多账号防封号](https://roxybrowser.cn/invite/A4YZ2O)**(优惠码 9 折)<br>感谢 Roxy 浏览器 赞助本项目!专为绕过 AI 平台风控检测而生!完美屏蔽 Canvas、WebGL 等底层指纹,实现多账号绝对物理隔离,批量养号稳定防封。 |
-| <a href="https://www.energy-rent.work/"><img src="public/sponsors/flashrent-wordmark.png" width="170" alt="FlashRent"></a> | **[FlashRent — 波场能量租用平台](https://www.energy-rent.work/)**<br>感谢 FlashRent 赞助本项目！波场 TRON 能量租用，USDT 转账手续费立省高达 80%。秒级到账，无需冻结 TRX，支持单笔租用、批量派发与 Telegram Bot 集成。欢迎[免费体验](https://www.energy-rent.work/)。 |
-| <a href="https://agentearth.ai/login?mode=register&ref_code=Ot7RhpNk"><img src="public/sponsors/agentearth-wordmark.png" width="160" alt="AgentEarth"></a> | **[AgentEarth — 新用户注册即赠 5,000 积分（价值 $5）](https://agentearth.ai/login?mode=register&ref_code=Ot7RhpNk)**<br>感谢 AgentEarth 赞助本项目！专为 AI Agent 打造的专业 API 工具聚合平台，一键接入 1,400+ 外部工具（搜索、金融、爬虫、多模态等），全面支持 MCP 与 Skill 协议。注册即送 5,000 积分（价值 $5），[立即注册](https://agentearth.ai/login?mode=register&ref_code=Ot7RhpNk)。 |
 
 ## 检测信号与权重
 
@@ -270,19 +244,15 @@ src/
 ├── config/signals.ts    # 信号定义、权重、检测函数、图标
 ├── config/guides.ts     # 指南元数据:slug、分类、摘要、日期、相关指南、官方来源
 ├── config/official-rules.ts # 指南首页展示的 Anthropic 官方规则,每条附来源链接
-├── config/sponsors.ts   # 赞助商列表(logo、链接、中英文案)
-├── config/cn-models.ts  # 国产模型推荐(DeepSeek / GLM / Kimi 纯文字链接)
 ├── config/socials.ts    # 头部社交主页(小红书 / 抖音 / X)+ 二维码内容
 ├── content/guidesData.ts # 注册 content/guides/ 下的双语正文
 ├── utils/guide-html.ts  # 目录、表格容器、阅读时长
 ├── i18n/ui.ts           # 中英文案字典 + 取值 helper
 ├── scripts/detect.ts    # 扫描动效 + 打分 + 结论 + 分享逻辑(客户端)
-├── scripts/track.ts     # 出站推广链接的 GA 点击埋点
-├── layouts/BaseLayout.astro  # <head> SEO + GA + 全局样式
-├── components/          # Detector(含分享按钮)、Sponsors、CnModels、ScoreRing、Mascot、LangToggle、SocialLinks(二维码浮层)、Footer
+├── layouts/BaseLayout.astro  # <head> SEO + 全局样式
+├── components/          # Detector(含分享按钮)、ScoreRing、Mascot、LangToggle、SocialLinks(二维码浮层)、Footer、Hitokoto
 └── pages/               # index.astro(英)+ zh/index.astro + guides/ + zh/guides/ + api/check.ts
 public/mascot/           # 卡通 CEO 各状态图(打瞌睡 / 检测中 / 低 / 中 / 高风险)
-public/sponsors/         # 赞助商 logo
 scripts/
 └── gen-assets.mjs       # 重新生成 favicon / PWA 图标 / og.png(node scripts/gen-assets.mjs)
 skills/

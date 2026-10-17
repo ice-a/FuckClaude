@@ -39,8 +39,6 @@ const items = await Promise.all(
           target="_blank"
           rel="noopener noreferrer"
           aria-label={t(`social.${s.id}`)}
-          data-ga-event="social_click"
-          data-ga-id={s.id}
         >
           <svg
             width={s.iconSize?.w ?? 20}
